@@ -1,0 +1,15 @@
+web:
+  - "*" # All web addons
+
+server-tools:
+  - "*" # base server-tools addons
+
+server-ux:
+  - "*" # All server-ux addons
+partner-contact:
+  - "*" # All partner-contact addons
+horizon:
+  - "*" # All horizon addons
+
+formio:
+  - "*" # All formio addons

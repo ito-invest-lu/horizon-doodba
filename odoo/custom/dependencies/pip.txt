@@ -1,3 +1,13 @@
 git+https://github.com/OCA/openupgradelib.git@master
 unicodecsv
 unidecode
+jingtrang
+acme
+filelock
+google-api-python-client
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+formio-data
+pyzbar
+pdf2image

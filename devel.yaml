@@ -9,8 +9,8 @@ services:
       default:
       public:
     ports:
-      - "127.0.0.1:14899:6899"
-      - "127.0.0.1:14069:8069"
+      - "14899:6899"
+      - "14069:8069"
     environment:
       PORT: "6899 8069"
       TARGET: odoo
@@ -61,7 +61,6 @@ services:
       - --limit-time-real-cron=9999999
       - --limit-time-real=9999999
       - --workers=0
-      - --dev=reload,qweb,werkzeug,xml
 
   db:
     extends:

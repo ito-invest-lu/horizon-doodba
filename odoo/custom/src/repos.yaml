@@ -14,3 +14,68 @@
     - ocb $ODOO_VERSION
     # Example of a merge of the PR with the number <PR>
     # - oca refs/pull/<PR>/head
+
+web:
+  defaults:
+    depth: $DEPTH_MERGE
+  remotes:
+    origin: https://github.com/OCA/web.git
+    tecnativa: https://github.com/Tecnativa/partner-contact.git
+  target: origin $ODOO_VERSION
+  merges:
+    - origin $ODOO_VERSION
+
+partner-contact:
+  defaults:
+    # Shallow repositories (1=1) are faster & thinner
+    # You may need a bigger depth when merging PRs
+    depth: "$DEPTH_DEFAULT"
+  remotes:
+    partner-contact: https://github.com/OCA/partner-contact.git
+  target: partner-contact $ODOO_VERSION
+  merges:
+    - partner-contact $ODOO_VERSION
+
+horizon:
+  defaults:
+    # Shallow repositories (1=1) are faster & thinner
+    # You may need a bigger depth when merging PRs
+    depth: "$DEPTH_DEFAULT"
+  remotes:
+    horizon: https://github.com/be-cloud-be/horizon.git
+  target: horizon $ODOO_VERSION
+  merges:
+    - horizon $ODOO_VERSION
+
+server-tools:
+  defaults:
+    # Shallow repositories (1=1) are faster & thinner
+    # You may need a bigger depth when merging PRs
+    depth: "$DEPTH_DEFAULT"
+  remotes:
+    server-tools: https://github.com/OCA/server-tools.git
+  target: server-tools $ODOO_VERSION
+  merges:
+    - server-tools $ODOO_VERSION
+
+server-ux:
+  defaults:
+    # Shallow repositories (1=1) are faster & thinner
+    # You may need a bigger depth when merging PRs
+    depth: "$DEPTH_DEFAULT"
+  remotes:
+    server-ux: https://github.com/OCA/server-ux.git
+  target: server-ux $ODOO_VERSION
+  merges:
+    - server-ux $ODOO_VERSION
+
+formio:
+  defaults:
+    # Shallow repositories (1=1) are faster & thinner
+    # You may need a bigger depth when merging PRs
+    depth: "$DEPTH_DEFAULT"
+  remotes:
+    formio: https://github.com/novacode-nl/odoo-formio.git
+  target: formio $ODOO_VERSION
+  merges:
+    - formio $ODOO_VERSION
