@@ -69,6 +69,17 @@ server-ux:
   merges:
     - server-ux $ODOO_VERSION
 
+server-auth:
+  defaults:
+    # Shallow repositories (1=1) are faster & thinner
+    # You may need a bigger depth when merging PRs
+    depth: "$DEPTH_DEFAULT"
+  remotes:
+    server-auth: https://github.com/OCA/server-auth.git
+  target: server-auth $ODOO_VERSION
+  merges:
+    - server-auth $ODOO_VERSION
+
 formio:
   defaults:
     # Shallow repositories (1=1) are faster & thinner

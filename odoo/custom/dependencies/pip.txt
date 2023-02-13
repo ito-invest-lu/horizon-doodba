@@ -12,3 +12,4 @@ formio-data
 pyzbar
 pdf2image
 pysftp
+email_validator
