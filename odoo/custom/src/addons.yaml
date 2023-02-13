@@ -6,8 +6,13 @@ server-tools:
 
 server-ux:
   - "*" # All server-ux addons
+
+server-auth:
+  - "*" # All server-auth addons
+
 partner-contact:
   - "*" # All partner-contact addons
+
 horizon:
   - "*" # All horizon addons
 
