@@ -50,7 +50,7 @@ if os.environ.get("RESTORE_FILESTORE"):
             [
                 "cp",
                 "-rf",
-                "%s/filestore" % (BACKUP_LOCATION),
+                "%s/filestore/*" % (BACKUP_LOCATION),
                 "%s/filestore/%s" % ("/var/lib/odoo", DB_SOURCE),
             ]
         )
