@@ -33,7 +33,7 @@ if os.environ.get("RESTORE_BACKUP"):
             shell=True,
         )
     )
-
+if os.environ.get("RESTORE_FILESTORE"):
     logger.info("Copying filestore to the volume.")
     logger.info(
         subprocess.check_output(
