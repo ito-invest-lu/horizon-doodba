@@ -50,7 +50,16 @@ if os.environ.get("RESTORE_FILESTORE"):
             [
                 "cp",
                 "-rf",
-                "%s/filestore/*" % (BACKUP_LOCATION),
+                "%s/filestore" % (BACKUP_LOCATION),
+                "%s/filestore" % ("/var/lib/odoo"),
+            ]
+        )
+    )
+    logger.debug(
+        subprocess.check_output(
+            [
+                "mv",
+                "%s/filestore/filestore" % ("/var/lib/odoo"),
                 "%s/filestore/%s" % ("/var/lib/odoo", DB_SOURCE),
             ]
         )
