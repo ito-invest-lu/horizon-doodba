@@ -27,8 +27,9 @@ services:
       SMTP_PORT: "1025"
       WDB_WEB_PORT: "14984"
       # To avoid installing demo data export DOODBA_WITHOUT_DEMO=all
-      WITHOUT_DEMO: "${DOODBA_WITHOUT_DEMO-false}"
-      RESTORE_BACKUP: 1
+      WITHOUT_DEMO:
+        "${DOODBA_WITHOUT_DEMO-false}"
+        #RESTORE_BACKUP: 1
       RESTORE_FILESTORE: 1
       BACKUP_LOCATION: "/opt/odoo/backup"
     volumes:
