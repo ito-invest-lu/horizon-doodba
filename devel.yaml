@@ -38,13 +38,7 @@ services:
     depends_on:
       - db
     command:
-      - odoo
-      - --limit-memory-soft=0
-      - --limit-time-real-cron=9999999
-      - --limit-time-real=9999999
-      - --workers=0
-      - --upgrade all
-      - --stop-after-init
+      - click-odoo-update
 
   db:
     extends:

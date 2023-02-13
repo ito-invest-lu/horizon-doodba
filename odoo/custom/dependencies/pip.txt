@@ -11,3 +11,4 @@ google-auth-httplib2
 formio-data
 pyzbar
 pdf2image
+pysftp
