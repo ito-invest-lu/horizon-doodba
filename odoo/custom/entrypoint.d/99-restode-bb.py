@@ -40,11 +40,6 @@ if os.environ.get("RESTORE_FILESTORE"):
             ["rm", "-rf", "%s/filestore/%s" % ("/var/lib/odoo", DB_SOURCE)]
         )
     )
-    logger.info(
-        subprocess.check_output(
-            ["mkdir", "-p", "%s/filestore/%s" % ("/var/lib/odoo", DB_SOURCE)]
-        )
-    )
     logger.debug(
         subprocess.check_output(
             [
