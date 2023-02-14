@@ -1048,7 +1048,7 @@ def restore_snapshot(
 )
 def download_horizon_backup(
     c,
-    admin_password=None,
+    admin_password,
 ):
     """Download Horizon backup
 
