@@ -1050,6 +1050,10 @@ def download_horizon_backup(
     c,
     admin_password=None,
 ):
+    """Download Horizon backup
+
+    Download the backup and inflate all in backup dir.
+    """
     _logger.info("Downloading backup from Horizon backup")
     c.run(
         f"mkdir backup",
