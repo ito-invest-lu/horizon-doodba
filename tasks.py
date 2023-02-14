@@ -1062,7 +1062,7 @@ def download_horizon_backup(
         pty=True,
     )
     c.run(
-        f"wget --post-data 'master_pwd={admin_password}&name=horizon&backup_format=zip' -O ./backup.zip https://horizon.student-crlg.be/web/database/backup",
+        f"wget --no-cache --post-data 'master_pwd={admin_password}&name=horizon&backup_format=zip' -O ./backup.zip https://horizon.student-crlg.be/web/database/backup",
         env=UID_ENV,
         warn=True,
         pty=True,
