@@ -1040,3 +1040,32 @@ def restore_snapshot(
         if "Stopping" in cur_state:
             # Restart services if they were previously active
             c.run("docker-compose start odoo db", pty=True)
+
+@task(
+    help={
+        "admin_password": "The admin password to download the backup",
+    },
+)
+def download_horizon_backup(
+    c,
+    admin_password=None,
+):
+    _logger.info("Downloading backup from Horizon backup")
+    c.run(
+        f"mkdir backup",
+        env=UID_ENV,
+        warn=True,
+        pty=True,
+    )
+    c.run(
+        f"wget --post-data 'master_pwd={admin_password}&name=horizon&backup_format=zip' -O ./backup.zip https://horizon.student-crlg.be/web/database/backup",
+        env=UID_ENV,
+        warn=True,
+        pty=True,
+    )
+    c.run(
+        f"unzip backup.zip -d backup",
+        env=UID_ENV,
+        warn=True,
+        pty=True,
+    )
