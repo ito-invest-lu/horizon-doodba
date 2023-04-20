@@ -13,3 +13,6 @@ pyzbar
 pdf2image
 pysftp
 email_validator
+watchdog
+xmlsec
+zeep==4.2.1
