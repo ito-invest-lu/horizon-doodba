@@ -16,9 +16,9 @@ This project is a Doodba scaffolding. Check upstream docs on the matter:
 
 # Credits
 
-This project is maintained by:
+This project is maintained by [ITO INVEST](https://www.ito-invest.lu).
 
-[![Tecnativa](https://www.tecnativa.com/r/H3p)](https://www.tecnativa.com/r/bb4)
+Credits to [![Tecnativa](https://www.tecnativa.com/r/H3p)](https://www.tecnativa.com/r/bb4) !!
 
 Also, special thanks to
 [our dear community contributors](https://github.com/Tecnativa/doodba-copier-template/graphs/contributors).
