@@ -2,3 +2,7 @@ openssl
 libxml2-dev
 libxmlsec1-dev
 libxmlsec1-openssl
+iputils-ping
+htop
+lsof
+procps

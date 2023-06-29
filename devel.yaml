@@ -34,12 +34,12 @@ services:
       DOODBA_ENVIRONMENT: "${DOODBA_ENVIRONMENT-devel}"
       LIST_DB: "true"
       DEBUGPY_ENABLE: "${DOODBA_DEBUGPY_ENABLE:-0}"
-      PGDATABASE: &dbname devel
+      PGDATABASE: &dbname horizon
       PYTHONDONTWRITEBYTECODE: 1
       PYTHONOPTIMIZE: ""
       PYTHONPATH: /opt/odoo/custom/src/odoo
       SMTP_PORT: "1025"
-      WDB_WEB_PORT: "14984"
+      WDB_WEB_PORT: "16984"
       # To avoid installing demo data export DOODBA_WITHOUT_DEMO=all
       WITHOUT_DEMO: "${DOODBA_WITHOUT_DEMO-false}"
     volumes:
@@ -61,7 +61,28 @@ services:
       - --limit-memory-soft=0
       - --limit-time-real-cron=9999999
       - --limit-time-real=9999999
+<<<<<<< Updated upstream
       - --workers=0
+=======
+      - --workers=3
+      - --dev=reload,xml
+    networks: &public
+      default:
+      web:
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=web
+      - traefik.http.routers.horizon-acc.service=horizon-acc
+      - traefik.http.routers.horizon-acc.rule=(Host(`horizon-acc.ito-invest.lu`))
+      - traefik.http.routers.horizon-acc.tls=true
+      - traefik.http.routers.horizon-acc.tls.certresolver=letsencrypt
+      - traefik.http.services.horizon-acc.loadbalancer.server.port=8069
+      - traefik.http.routers.horizon-acc-lp.service=horizon-acc-lp
+      - traefik.http.routers.horizon-acc-lp.rule=(Host(`horizon-acc.ito-invest.lu`) && (PathPrefix(`/websocket`)))
+      - traefik.http.routers.horizon-acc-lp.tls=true
+      - traefik.http.routers.horizon-acc-lp.tls.certresolver=letsencrypt
+      - traefik.http.services.horizon-acc-lp.loadbalancer.server.port=8072
+>>>>>>> Stashed changes
 
   db:
     extends:
@@ -75,9 +96,9 @@ services:
     image: docker.io/sosedoff/pgweb
     networks: *public
     ports:
-      - "127.0.0.1:14081:8081"
+      - "16081:8081"
     environment:
-      DATABASE_URL: postgres://odoo:odoopassword@db:5432/devel?sslmode=disable
+      DATABASE_URL: postgres://odoo:odoopassword@db:5432/horizon?sslmode=disable
     depends_on:
       - db
 
@@ -87,13 +108,13 @@ services:
       service: smtpfake
     networks: *public
     ports:
-      - "127.0.0.1:14025:8025"
+      - "127.0.0.1:16025:8025"
 
   wdb:
     image: docker.io/kozea/wdb
     networks: *public
     ports:
-      - "127.0.0.1:14984:1984"
+      - "16984:1984"
     # HACK https://github.com/Kozea/wdb/issues/136
     init: true
 
@@ -104,7 +125,7 @@ services:
       default:
         aliases:
           - cdnjs.cloudflare.com
-      public:
+      web:
     environment:
       TARGET: cdnjs.cloudflare.com
       PRE_RESOLVE: 1
@@ -115,7 +136,7 @@ services:
       default:
         aliases:
           - fonts.googleapis.com
-      public:
+      web:
     environment:
       TARGET: fonts.googleapis.com
       PRE_RESOLVE: 1
@@ -126,7 +147,7 @@ services:
       default:
         aliases:
           - fonts.gstatic.com
-      public:
+      web:
     environment:
       TARGET: fonts.gstatic.com
       PRE_RESOLVE: 1
@@ -137,7 +158,7 @@ services:
       default:
         aliases:
           - www.google.com
-      public:
+      web:
     environment:
       TARGET: www.google.com
       PRE_RESOLVE: 1
@@ -148,7 +169,7 @@ services:
       default:
         aliases:
           - www.googleapis.com
-      public:
+      web:
     environment:
       TARGET: www.googleapis.com
       PRE_RESOLVE: 1
@@ -159,15 +180,21 @@ services:
       default:
         aliases:
           - www.gravatar.com
-      public:
+      web:
     environment:
       TARGET: www.gravatar.com
       PRE_RESOLVE: 1
 
 networks:
   default:
+<<<<<<< Updated upstream
     internal: ${DOODBA_NETWORK_INTERNAL-true}
   public:
+=======
+  web:
+    name: web
+    external: true
+>>>>>>> Stashed changes
 
 volumes:
   filestore:

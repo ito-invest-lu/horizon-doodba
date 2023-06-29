@@ -10,7 +10,7 @@ services:
         GID: "${GID:-1000}"
     environment:
       EMAIL_FROM: ""
-      PGDATABASE: &dbname prod
+      PGDATABASE: &dbname horizon
       PGUSER: &dbuser "odoo"
       PROXY_MODE: "true"
       LIST_DB: "false"
