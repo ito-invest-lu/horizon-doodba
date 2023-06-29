@@ -31,7 +31,7 @@ partner-contact:
     # You may need a bigger depth when merging PRs
     depth: "$DEPTH_DEFAULT"
   remotes:
-    partner-contact: https://github.com/OCA/partner-contact.git
+    partner-contact: https://github.com/ito-invest-js/partner-contact.git
   target: partner-contact $ODOO_VERSION
   merges:
     - partner-contact $ODOO_VERSION
