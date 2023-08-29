@@ -6,3 +6,5 @@ iputils-ping
 htop
 lsof
 procps
+rsync
+wget

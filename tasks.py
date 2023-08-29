@@ -1040,3 +1040,31 @@ def restore_snapshot(
         if "Stopping" in cur_state:
             # Restart services if they were previously active
             c.run("docker-compose start odoo db", pty=True)
+
+@task(
+    help={
+        "db": "The DB name to upgrade. Default: 'devel'.",
+        "list_only" : "Only list modules to be upgraded. Default: False",
+    },
+)
+def update_modules(
+    c,
+    db="devel",
+    list_only=False,
+):
+    """Update all required module in the database.
+
+    Uses click-odoo-update behind the scenes to update required modules.
+    """
+    with c.cd(str(PROJECT_ROOT)):
+        cur_state = c.run("docker-compose stop odoo db", pty=True).stdout
+        _logger.info("Update modules in %s" % (db))
+        _run = "docker-compose run --rm -l traefik.enable=false odoo"
+        c.run(
+            f"{_run} click-odoo-update -d {db} --ignore-core-addons {'--list-only' if list_only else ''}",
+            env=UID_ENV,
+            pty=True,
+        )
+        if "Stopping" in cur_state:
+            # Restart services if they were previously active
+            c.run("docker-compose start odoo db", pty=True)

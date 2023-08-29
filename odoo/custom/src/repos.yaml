@@ -54,9 +54,10 @@ server-tools:
     depth: "$DEPTH_DEFAULT"
   remotes:
     server-tools: https://github.com/OCA/server-tools.git
+    ito-server-tools: git@github.com:ito-invest-js/server-tools.git
   target: server-tools $ODOO_VERSION
   merges:
-    - server-tools $ODOO_VERSION
+    - ito-server-tools $ODOO_VERSION-mig-database_cleanup
 
 server-ux:
   defaults:

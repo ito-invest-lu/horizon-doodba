@@ -2,6 +2,7 @@
 /odoo/auto
 /odoo/custom/src/*/
 !/odoo/custom/src/private/
+/odoo/custom/ssh
 
 # Ignore docker-compose.yml and overrides by default, to allow easy defaults per clone
 /docker-compose.yml

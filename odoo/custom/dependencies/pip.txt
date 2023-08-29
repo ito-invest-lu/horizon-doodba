@@ -18,3 +18,4 @@ pyopenssl==22.1.0
 cryptography
 xmlsec
 zeep==4.2.1
+pdfminer.six

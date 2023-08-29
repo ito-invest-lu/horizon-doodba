@@ -1,19 +1,6 @@
 version: "2.4"
 
 services:
-  odoo_proxy:
-    image: ghcr.io/tecnativa/docker-whitelist:latest
-    depends_on:
-      - odoo
-    networks: &public
-      default:
-      public:
-    ports:
-      - "14899:6899"
-      - "14069:8069"
-    environment:
-      PORT: "6899 8069"
-      TARGET: odoo
 
   odoo:
     extends:
@@ -30,11 +17,14 @@ services:
         PIP_INSTALL_ODOO: "false"
         CLEAN: "false"
         COMPILE: "false"
+    networks: &public
+      default:
+      public:
     environment:
       DOODBA_ENVIRONMENT: "${DOODBA_ENVIRONMENT-devel}"
-      LIST_DB: "true"
+      LIST_DB: "false"
       DEBUGPY_ENABLE: "${DOODBA_DEBUGPY_ENABLE:-0}"
-      PGDATABASE: &dbname horizon
+      PGDATABASE: &dbname horizon_test_16.0_2023_08_25_05_59
       PYTHONDONTWRITEBYTECODE: 1
       PYTHONOPTIMIZE: ""
       PYTHONPATH: /opt/odoo/custom/src/odoo
@@ -55,20 +45,15 @@ services:
       - proxy_www_googleapis_com
       - proxy_www_gravatar_com
       - smtp
-      - wdb
     command:
       - odoo
       - --limit-memory-soft=0
       - --limit-time-real-cron=9999999
       - --limit-time-real=9999999
-<<<<<<< Updated upstream
-      - --workers=0
-=======
       - --workers=3
       - --dev=reload,xml
-    networks: &public
-      default:
-      web:
+        #- -u all 
+        #- --stop-after-init
     labels:
       - traefik.enable=true
       - traefik.docker.network=web
@@ -82,23 +67,24 @@ services:
       - traefik.http.routers.horizon-acc-lp.tls=true
       - traefik.http.routers.horizon-acc-lp.tls.certresolver=letsencrypt
       - traefik.http.services.horizon-acc-lp.loadbalancer.server.port=8072
->>>>>>> Stashed changes
 
   db:
     extends:
       file: common.yaml
       service: db
+    networks:
+      default:
     environment:
       POSTGRES_DB: *dbname
       POSTGRES_PASSWORD: odoopassword
 
   pgweb:
     image: docker.io/sosedoff/pgweb
-    networks: *public
     ports:
       - "16081:8081"
+    networks: *public
     environment:
-      DATABASE_URL: postgres://odoo:odoopassword@db:5432/horizon?sslmode=disable
+      DATABASE_URL: postgres://odoo:odoopassword@db:5432/devel?sslmode=disable
     depends_on:
       - db
 
@@ -106,17 +92,10 @@ services:
     extends:
       file: common.yaml
       service: smtpfake
-    networks: *public
+    networks:
+      default:
     ports:
       - "127.0.0.1:16025:8025"
-
-  wdb:
-    image: docker.io/kozea/wdb
-    networks: *public
-    ports:
-      - "16984:1984"
-    # HACK https://github.com/Kozea/wdb/issues/136
-    init: true
 
   # Whitelist outgoing traffic for tests, reports, etc.
   proxy_cdnjs_cloudflare_com:
@@ -125,7 +104,7 @@ services:
       default:
         aliases:
           - cdnjs.cloudflare.com
-      web:
+      public:
     environment:
       TARGET: cdnjs.cloudflare.com
       PRE_RESOLVE: 1
@@ -136,7 +115,7 @@ services:
       default:
         aliases:
           - fonts.googleapis.com
-      web:
+      public:
     environment:
       TARGET: fonts.googleapis.com
       PRE_RESOLVE: 1
@@ -147,7 +126,7 @@ services:
       default:
         aliases:
           - fonts.gstatic.com
-      web:
+      public:
     environment:
       TARGET: fonts.gstatic.com
       PRE_RESOLVE: 1
@@ -158,7 +137,7 @@ services:
       default:
         aliases:
           - www.google.com
-      web:
+      public:
     environment:
       TARGET: www.google.com
       PRE_RESOLVE: 1
@@ -169,7 +148,7 @@ services:
       default:
         aliases:
           - www.googleapis.com
-      web:
+      public:
     environment:
       TARGET: www.googleapis.com
       PRE_RESOLVE: 1
@@ -180,21 +159,19 @@ services:
       default:
         aliases:
           - www.gravatar.com
-      web:
+      public:
     environment:
       TARGET: www.gravatar.com
       PRE_RESOLVE: 1
 
 networks:
   default:
-<<<<<<< Updated upstream
-    internal: ${DOODBA_NETWORK_INTERNAL-true}
+    driver: bridge
+    name: horizon-acc
+    internal: true
   public:
-=======
-  web:
-    name: web
-    external: true
->>>>>>> Stashed changes
+    external:
+      name: web
 
 volumes:
   filestore:
