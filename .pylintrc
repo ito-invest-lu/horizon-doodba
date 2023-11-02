@@ -66,7 +66,7 @@ enable=anomalous-backslash-in-string,
     wrong-tabs-instead-of-spaces,
     xml-syntax-error,
     # messages that do not cause the lint step to fail
-    consider-merging-classes-inherited,
+    #consider-merging-classes-inherited,
     create-user-wo-reset-password,
     dangerous-filter-wo-user,
     deprecated-module,

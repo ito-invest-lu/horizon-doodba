@@ -22,7 +22,7 @@ services:
       public:
     environment:
       DOODBA_ENVIRONMENT: "${DOODBA_ENVIRONMENT-devel}"
-      LIST_DB: "false"
+      LIST_DB: "true"
       DEBUGPY_ENABLE: "${DOODBA_DEBUGPY_ENABLE:-0}"
       PGDATABASE: &dbname horizon_test_16.0_2023_08_25_05_59
       PYTHONDONTWRITEBYTECODE: 1
@@ -34,7 +34,7 @@ services:
       WITHOUT_DEMO: "${DOODBA_WITHOUT_DEMO-false}"
     volumes:
       - ./odoo/data/:/opt/odoo/data/:ro,z
-      - ./odoo/custom:/opt/odoo/custom:ro,z
+      - ./odoo/custom:/opt/odoo/custom:rw,z
       - ./odoo/auto:/opt/odoo/auto:rw,z
     depends_on:
       - db
@@ -59,13 +59,15 @@ services:
       - traefik.docker.network=web
       - traefik.http.routers.horizon-acc.service=horizon-acc
       - traefik.http.routers.horizon-acc.rule=(Host(`horizon-acc.ito-invest.lu`))
-      - traefik.http.routers.horizon-acc.tls=true
-      - traefik.http.routers.horizon-acc.tls.certresolver=letsencrypt
+      - traefik.http.routers.horizon-acc.tls=false
+      - traefik.http.routers.horizon-acc.entrypoints=web
+      #- traefik.http.routers.horizon-acc.tls.certresolver=letsencrypt
       - traefik.http.services.horizon-acc.loadbalancer.server.port=8069
       - traefik.http.routers.horizon-acc-lp.service=horizon-acc-lp
       - traefik.http.routers.horizon-acc-lp.rule=(Host(`horizon-acc.ito-invest.lu`) && (PathPrefix(`/websocket`)))
-      - traefik.http.routers.horizon-acc-lp.tls=true
-      - traefik.http.routers.horizon-acc-lp.tls.certresolver=letsencrypt
+      - traefik.http.routers.horizon-acc-lp.tls=false
+      - traefik.http.routers.horizon-acc-lp.entrypoints=web
+      #- traefik.http.routers.horizon-acc-lp.tls.certresolver=letsencrypt
       - traefik.http.services.horizon-acc-lp.loadbalancer.server.port=8072
 
   db:
@@ -84,7 +86,7 @@ services:
       - "16081:8081"
     networks: *public
     environment:
-      DATABASE_URL: postgres://odoo:odoopassword@db:5432/devel?sslmode=disable
+      DATABASE_URL: postgres://odoo:odoopassword@db:5432/horizon_test_16.0_2023_08_25_05_59?sslmode=disable
     depends_on:
       - db
 
